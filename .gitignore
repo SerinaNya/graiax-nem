@@ -131,6 +131,7 @@ dmypy.json
 # secrets
 admins.list
 blockusers.list
+build.cmd
 
 # MacOS
 .DS_Store

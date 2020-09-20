@@ -5,9 +5,9 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="graiax-nem",
-    version="0.0.1.dev2",
+    version="0.0.2b1",
     author="Xiao_Jin",
-    keywords='graia graiax nem graiax-nem',
+    keywords='graia graiax nem graiax-nem graia-message',
     description="适用于 Graia Framework 的消息解析过滤器",
     long_description=long_description,
     long_description_content_type="text/markdown",

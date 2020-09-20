@@ -8,7 +8,7 @@ from graia.broadcast.builtin.decoraters import Depend
 from .nem import NEM
 
 
-class Filter(object):
+class Filters(object):
     '''
     NEM 消息过滤器，作为 `headless_decoraters` 使用
 

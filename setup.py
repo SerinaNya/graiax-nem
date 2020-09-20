@@ -4,14 +4,15 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="graiaX-not-enough-messages",  # Replace with your own username
-    version="0.0.2",
+    name="graiax-nem",
+    version="0.0.1.dev2",
     author="Xiao_Jin",
-    author_email="me@xiao-jin.xyz",
-    description="GraiaX -- Not Enough Messages (NEM)",
+    keywords='graia graiax nem graiax-nem',
+    description="适用于 Graia Framework 的消息解析过滤器",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/jinzhijie/graiaX-nem",
-    packages=setuptools.find_packages(),
+    url="https://github.com/jinzhijie/graiax-nem",
+    packages=['graiax/nem'],
+    install_requires=['graia-application-mirai'],
     python_requires='>=3.7',
 )

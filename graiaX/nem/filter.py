@@ -46,7 +46,7 @@ class Filter(object):
         Args:
             command_name: 指令名称（不带标识符）'''
         def wrapper(gm: GroupMessage):
-            nem = NEM(gm, '&')
+            nem = NEM(gm)
             if nem.permission.isBlocked():
                 raise ExecutionStop()
             if not nem.plain_message:
@@ -62,7 +62,7 @@ class Filter(object):
         Args:
             word: 文字'''
         def wrapper(gm: GroupMessage):
-            nem = NEM(gm, '&')
+            nem = NEM(gm)
             if nem.permission.isBlocked():
                 raise ExecutionStop()
             if not nem.plain_message:
@@ -78,7 +78,7 @@ class Filter(object):
         Args:
             words_list: 关键字列表'''
         def wrapper(gm: GroupMessage):
-            nem = NEM(gm, '&')
+            nem = NEM(gm)
             if nem.permission.isBlocked():
                 raise ExecutionStop()
             inList = False
@@ -99,7 +99,7 @@ class Filter(object):
         Args:
             pattern: 正则表达式（必须为 str）'''
         def wrapper(gm: GroupMessage):
-            nem = NEM(gm, '&')
+            nem = NEM(gm)
             if nem.permission.isBlocked():
                 raise ExecutionStop()
             if not nem.plain_message:
@@ -115,7 +115,7 @@ class Filter(object):
         Args:
             pattern_list: 正则表达式列表'''
         def wrapper(gm: GroupMessage):
-            nem = NEM(gm, '&')
+            nem = NEM(gm)
             if nem.permission.isBlocked():
                 raise ExecutionStop()
             if not nem.plain_message:

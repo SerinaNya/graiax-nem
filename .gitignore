@@ -128,10 +128,11 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# secrets
-admins.list
-blockusers.list
-build.cmd
-
 # MacOS
 .DS_Store
+
+# Debug & build files
+build.cmd
+t*.py
+admins.list
+blockusers.list

@@ -1,9 +1,11 @@
-from graiax.nem.elements import AtPro
 from typing import List, Optional, Tuple
 
 from graia.application.entry import (At, GroupMessage, MessageChain, Plain,
                                      Quote, Source)
+
+from .elements import AtPro
 from .permission import Permission
+
 
 class NEM(object):
     '''

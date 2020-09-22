@@ -1,3 +1,4 @@
+from graiax.nem.elements import AtPro
 from typing import List, Optional, Tuple
 
 from graia.application.entry import (At, GroupMessage, MessageChain, Plain,
@@ -21,7 +22,7 @@ class NEM(object):
     - `nem.chain` 为原消息链（`MessageChain`）
     - `nem.sender_id` 为消息发送者的 QQ 号
     - `nem.source` 为原消息链的 `Source`，可用于回复
-    - `nem.at` 为消息中所有的 `At` 列表
+    - `nem.at` 为消息中所有的 `At` 列表，使用了 `AtPro` 拥有特殊功能
     - `nem.plain_message` *为所有的 `Plain` 拼接而成的字符串
     - `nem.plain_message_source` *为被回复的消息中所有的 `Plain` 拼接而成的字符串
     '''
@@ -31,7 +32,7 @@ class NEM(object):
     plain_message: Optional[str]
     plain_message_source: Optional[str]
     source: Source
-    at: List[At]
+    at: AtPro
     permission: Permission
 
     class Command(object):
@@ -75,8 +76,9 @@ class NEM(object):
         else:
             return None
 
-    def _getAt(self) -> List[At]:
-        return self.chain[At]
+    def _getAt(self) -> AtPro:
+        atList = self.chain[At]
+        return AtPro(atList)
 
     def _getQuotePlainMessage(self) -> Optional[str]:
         if Quote in self.chain:

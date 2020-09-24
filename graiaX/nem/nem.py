@@ -2,8 +2,10 @@ from typing import List, Optional, Tuple
 
 from graia.application.entry import (At, GroupMessage, MessageChain, Plain,
                                      Quote, Source)
+from graia.application.group import Member
+from graia.application.message.elements.internal import Image
 
-from .elements import AtPro
+from .elements import AtList, ImagePro
 from .permission import Permission
 
 
@@ -22,19 +24,23 @@ class NEM(object):
     属性解释：（带 `*` 号的表示此项有可能为 `None`）
     - `nem.permission` 为消息发送者的 `Permission` 对象
     - `nem.chain` 为原消息链（`MessageChain`）
+    - `nem.sender` 为消息发送者的 `Member` 实例
     - `nem.sender_id` 为消息发送者的 QQ 号
     - `nem.source` 为原消息链的 `Source`，可用于回复
-    - `nem.at` 为消息中所有的 `At` 列表，使用了 `AtPro` 拥有特殊功能
+    - `nem.at` *为消息中所有的 `At` 列表，使用了 `AtList` 拥有特殊功能
+    - `nem.images` *为 `ImagePro` 列表
     - `nem.plain_message` *为所有的 `Plain` 拼接而成的字符串
     - `nem.plain_message_source` *为被回复的消息中所有的 `Plain` 拼接而成的字符串
     '''
     _commandSymbol: str
     chain: MessageChain
+    sender: Member
     sender_id: int
     plain_message: Optional[str]
     plain_message_source: Optional[str]
     source: Source
-    at: AtPro
+    at: AtList
+    images: List[ImagePro]
     permission: Permission
 
     class Command(object):
@@ -58,12 +64,14 @@ class NEM(object):
         '''
         self._commandSymbol = _command_symbol
         self.chain = _groupmessage.messageChain
+        self.sender = _groupmessage.sender
         self.sender_id = _groupmessage.sender.id
         self.plain_message = self._getPlainMessage(self.chain)
         self.at = self._getAt()
         self.Command.cmd, self.Command.args, self.Command.argsList = self._getCommand()
         self.plain_message_source = self._getQuotePlainMessage()
         self.source = self._getSource()
+        self.images = self._makeImageProList()
         self.permission = Permission(self.sender_id)
 
     @staticmethod
@@ -78,9 +86,9 @@ class NEM(object):
         else:
             return None
 
-    def _getAt(self) -> AtPro:
+    def _getAt(self) -> AtList:
         atList = self.chain[At]
-        return AtPro(atList)
+        return AtList(atList)
 
     def _getQuotePlainMessage(self) -> Optional[str]:
         if Quote in self.chain:
@@ -117,3 +125,9 @@ class NEM(object):
             return cmd, _args, _argsList
         else:
             return None, None, None
+
+    def _makeImageProList(self) -> Optional[List[ImagePro]]:
+        if not Image in self.chain:
+            return None
+        images = self.chain[Image]
+        return [ImagePro(i) for i in images]

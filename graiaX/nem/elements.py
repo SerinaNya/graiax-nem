@@ -1,6 +1,7 @@
-from typing import Iterator, List, Optional, Union
+from _typeshed import StrPath
+from typing import List, Optional, Union
 
-from graia.application.message.elements.internal import At
+from graia.application.message.elements.internal import At, Image
 
 
 class Command(object):
@@ -15,9 +16,10 @@ class Command(object):
     argsList: Optional[List[str]]
 
 
-class AtPro(list):
+class AtList(List[At]):
     '''
     At 的增强版，允许你更方便地操作 At 列表
+    AtList 本身也是一个列表，因此可以使用大部分的 list 特性
     '''
     ints: List[int]
 
@@ -30,9 +32,6 @@ class AtPro(list):
         else:
             raise TypeError('Must be Union[At, int]')
 
-    def __set(self, l: List[At]) -> None:
-        self.__init__(l)
-
     def __init__(self, atList: List[At]) -> None:
         self.ints = [i.target for i in atList]
         super().__init__(atList)
@@ -40,10 +39,25 @@ class AtPro(list):
     def __contains__(self, at: Union[At, int]) -> bool:
         return self.__getTarget(at) in self.ints
 
-    def __iter__(self) -> Iterator[At]:
-        return super().__iter__()
+    def append(self, at: Union[At, int]) -> None:
+        if isinstance(at, At):
+            atObj = at
+        elif isinstance(at, int):
+            atObj =  At(at)
+        else:
+            raise TypeError('Must be Union[At, int]')
+        super().append(atObj)
 
-    def get(self, at: Union[At, int]) -> Optional[At]:
+    def __set(self, l: List[At]) -> None:
+        '''
+        内部函数，用于更新 AtList
+        '''
+        self.__init__(l)
+
+    def get(self, at: Union[At, int]) -> At:
+        '''
+        根据 QQ 号或 `At` 对象获取 `At` 对象本身
+        '''
         target = self.__getTarget(at)
         ats: List[At] = self.copy()
         for i in ats:
@@ -53,6 +67,9 @@ class AtPro(list):
             return None
 
     def __del(self, at: Union[At, int]) -> None:
+        '''
+        内部函数，用于删除 `AtList` 中的某一项
+        '''
         target = self.__getTarget(at)
         ats = self.copy()
         for i in range(len(ats)):
@@ -62,5 +79,15 @@ class AtPro(list):
                 break
 
     def delete(self, at: Union[At, int]) -> None:
+        '''
+        根据传入的 QQ 号或 `At` 对象删除 `AtList` 中的所有匹配项
+        '''
         while self.__contains__(at):
             self.__del(at)
+
+
+class ImagePro(Image):
+    async def save2file(self, filepath: StrPath) -> None:
+        imageBytes = await self.http_to_bytes()
+        with open(filepath, 'wb') as f:
+            f.write(imageBytes)

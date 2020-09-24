@@ -9,7 +9,7 @@ from .nem import NEM
 
 
 class FrontFilters(object):
-    '''前置过滤器，为修饰器，无法直接使用'''
+    '''过滤器的前置修饰器，无法直接使用'''
     @staticmethod
     def requirePlain(func: Callable[[GroupMessage], Depend]):
         def wrapper(gm: GroupMessage):

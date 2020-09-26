@@ -1,7 +1,9 @@
-from typing import List, Optional, Tuple
+from typing import List, Optional, Tuple, Union
 
 from graia.application.entry import (At, GroupMessage, MessageChain, Plain,
                                      Quote, Source)
+from graia.application.event.messages import FriendMessage
+from graia.application.friend import Friend
 from graia.application.group import Member
 from graia.application.message.elements.internal import Image
 
@@ -24,7 +26,7 @@ class NEM(object):
     属性解释：（带 `*` 号的表示此项有可能为 `None`）
     - `nem.permission` 为消息发送者的 `Permission` 对象
     - `nem.chain` 为原消息链（`MessageChain`）
-    - `nem.sender` 为消息发送者的 `Member` 实例
+    - `nem.sender` 为消息发送者的 `Member` 或 `Friend` 实例
     - `nem.sender_id` 为消息发送者的 QQ 号
     - `nem.source` 为原消息链的 `Source`，可用于回复
     - `nem.at` *为消息中所有的 `At` 列表，使用了 `AtList` 拥有特殊功能
@@ -34,7 +36,7 @@ class NEM(object):
     '''
     _commandSymbol: str
     chain: MessageChain
-    sender: Member
+    sender: Union[Member, Friend]
     sender_id: int
     plain_message: Optional[str]
     plain_message_source: Optional[str]
@@ -54,18 +56,18 @@ class NEM(object):
         args: Optional[str]
         argsList: Optional[List[str]]
 
-    def __init__(self, _groupmessage: GroupMessage, _command_symbol: str = '&') -> None:
+    def __init__(self, _message: Union[GroupMessage, FriendMessage], _command_symbol: str = '&') -> None:
         '''
         初始化 NEM 解析器
 
         Args:
-            _groupmessage: `GroupMessage` 对象
+            _message: `Message` 对象
             _command_symbol: 指令标识符，默认为 `'&'`
         '''
-        self._commandSymbol = _command_symbol
-        self.chain = _groupmessage.messageChain
-        self.sender = _groupmessage.sender
-        self.sender_id = _groupmessage.sender.id
+        self._commandSymbol = self._commandSymbol or _command_symbol
+        self.chain = _message.messageChain
+        self.sender = _message.sender
+        self.sender_id = _message.sender.id
         self.plain_message = self._getPlainMessage(self.chain)
         self.at = self._getAt()
         self.Command.cmd, self.Command.args, self.Command.argsList = self._getCommand()

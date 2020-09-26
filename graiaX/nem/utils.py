@@ -1,5 +1,9 @@
-from typing import List
+from typing import List, TypeVar
 import os.path
+
+from graia.application.event.messages import FriendMessage, GroupMessage, TempMessage
+
+AnyMessage = TypeVar('AnyMessage', GroupMessage, FriendMessage, TempMessage)
 
 def createFiles(files: List[str]) -> None:
     for file in files:

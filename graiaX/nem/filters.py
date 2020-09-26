@@ -2,6 +2,7 @@ import re
 from typing import Callable, List
 
 from graia.application.entry import Group, GroupMessage
+from graia.application.event.messages import FriendMessage
 from graia.broadcast.exceptions import ExecutionStop
 from graia.broadcast.builtin.decoraters import Depend
 
@@ -35,6 +36,8 @@ class Filters(object):
 
     请查看源码以了解所有可用的过滤器
     '''
+
+    # GroupMessage
     @staticmethod
     def exceptGroups(group_list: List[int]) -> Depend:
         '''在指定群聊内禁用'''
@@ -71,6 +74,19 @@ class Filters(object):
         def wrapper(gm: GroupMessage):
             nem = NEM(gm)
             if nem.Command.cmd != command_name:
+                raise ExecutionStop()
+        return Depend(wrapper)
+    
+    @staticmethod
+    def onAt(qq: int) -> Depend:
+        '''当 `qq` 在群内被 At 时执行
+
+        Args:
+            qq: QQ 号'''
+        @FrontFilters.requireNotBanded
+        def wrapper(gm: GroupMessage):
+            nem = NEM(gm)
+            if not qq in nem.at:
                 raise ExecutionStop()
         return Depend(wrapper)
 
@@ -139,3 +155,11 @@ class Filters(object):
             if not matched:
                 raise ExecutionStop()
         return Depend(wrapper)
+
+    # FriendMessage
+    def onFriend(qq: int) -> Depend:
+        def wrapper(fm: FriendMessage):
+            if fm.sender.id != qq:
+                raise ExecutionStop()
+        return Depend(wrapper)
+

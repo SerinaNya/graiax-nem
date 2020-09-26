@@ -14,8 +14,30 @@
     />
     <link
       rel="stylesheet"
-      href="//cdn.jsdelivr.net/npm/docsify/lib/themes/vue.css"
+      href="https://cdn.jsdelivr.net/npm/docsify/lib/themes/vue.css"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/prismjs@1.21.0/plugins/line-numbers/prism-line-numbers.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/prismjs@1.21.0/plugins/line-highlight/prism-line-highlight.css"
+    />
+    <style>
+      .markdown-section pre[data-lang] {
+        overflow: auto !important;
+      }
+      .markdown-section pre[data-lang] code {
+        overflow: visible;
+      }
+
+      .line-numbers .line-numbers-rows {
+        border-right: 2px solid white;
+        /* Fix paddings to align with code.*/
+        padding: 2.2em 0; /* Same as code block */
+      }
+    </style>
   </head>
   <body>
     <div id="app">Hi, here!</div>
@@ -25,9 +47,45 @@
         repo: 'jinzhijie/graiax-nem',
         loadSidebar: true,
         coverpage: true,
+        autoHeader: true,
+        topMargin: 45,
+        markdown: {
+          renderer: {
+            /* Change code block rendering. Add line-numbers class.*/
+            code: function (code, langtype) {
+              let cc = document.createElement('code');
+              cc.textContent = code;
+              // highligh handler
+              let splited = langtype.split(':');
+              let lang = splited[0];
+              let highlight = splited[1];
+
+              cc.setAttribute('class', 'language-' + lang);
+              return (
+                '<pre data-lang="' +
+                lang +
+                '" data-line="' +
+                highlight +
+                '" class="line-numbers">' +
+                cc.outerHTML +
+                '</pre>'
+              );
+            },
+          },
+        },
+        plugins: [
+          function (hook, vm) {
+            hook.doneEach(function (html) {
+              Prism.highlightAll();
+            });
+          },
+        ],
       };
     </script>
-    <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.21.0/components/prism-python.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.21.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.21.0/components/prism-bash.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.21.0/plugins/line-highlight/prism-line-highlight.min.js"></script>
   </body>
 </html>

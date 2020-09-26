@@ -15,6 +15,8 @@ class Command(object):
     args: Optional[str]
     argsList: Optional[List[str]]
 
+    #TODO 迁移指令解析逻辑
+
 
 class AtList(List[At]):
     '''
@@ -88,6 +90,12 @@ class AtList(List[At]):
 
 class ImagePro(Image):
     async def save2file(self, filepath: StrPath) -> None:
+        '''
+        将图片保存至文件
+
+        Args:
+            filepath: 文件路径
+        '''
         imageBytes = await self.http_to_bytes()
         with open(filepath, 'wb') as f:
             f.write(imageBytes)

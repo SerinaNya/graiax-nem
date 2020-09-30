@@ -12,7 +12,7 @@
 
 ## 使用
 
-```python:14,23
+```python:14,22,23
 # bot.py
 import asyncio
 
@@ -26,7 +26,7 @@ from graia.broadcast import Broadcast
 from graiax.nem import NEM
 from graiax.nem.filters import Filters
 
-BOTQQ = 10102233
+BOTQQ = 10102333
 
 loop = asyncio.get_event_loop()
 
@@ -51,16 +51,15 @@ async def nem_example(app: GraiaMiraiApplication, group: Group, _gm: GroupMessag
 app.launch_blocking()
 ```
 
-?> 别忘了修改 `BOTQQ` 和 `authKey` 的值
+?> 别忘了修改代码中高亮行的具体值
 
 运行代码，终端输出：
 
-```bash
-[root@localhost]$ python3 bot.py
+```log
 [2020-09-26 15:47:02,929][INFO]: launching app...
 [2020-09-26 15:47:02,960][INFO]: using websocket to receive event
 [2020-09-26 15:47:02,964][INFO]: event reveiver running...
 ```
 
-现在你可以在群里 @ 你的 bot 来测试了
+现在你可以在群里 @ 你的 bot 来测试。如果机器人回复了 `YES!` 那么恭喜你，你可以继续阅读下去了。
 

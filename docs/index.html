@@ -2,11 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>graix-nem 开发文档</title>
+    <title>graiax-nem 开发文档</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta
       name="description"
-      content="graiax-nem: 针对 Graia Framework 的消息链扩展、消息过滤器"
+      content="graiax-nem: 不仅仅是 Graia Framework 的消息链扩展、消息过滤器"
     />
     <meta
       name="viewport"
@@ -24,6 +24,10 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/prismjs@1.21.0/plugins/line-highlight/prism-line-highlight.css"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/prismjs@1.21.0/plugins/toolbar/prism-toolbar.css"
+    />
     <style>
       .markdown-section pre[data-lang] {
         overflow: auto !important;
@@ -37,10 +41,23 @@
         /* Fix paddings to align with code.*/
         padding: 2.2em 0; /* Same as code block */
       }
+
+      div.code-toolbar > .toolbar {
+        right: 4em;
+      }
+
+      div.code-toolbar > .toolbar a,
+      div.code-toolbar > .toolbar button,
+      div.code-toolbar > .toolbar span {
+        font-size: 0.6rem;
+        padding: 0.5em 1em;
+        box-shadow: 1px 3px 2px 0px rgba(0, 0, 0, 0.2);
+        border-radius: 1em;
+      }
     </style>
   </head>
   <body>
-    <div id="app">Hi, here!</div>
+    <div id="app">hi, here!</div>
     <script>
       window.$docsify = {
         name: 'graiax-nem',
@@ -87,5 +104,7 @@
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.21.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.21.0/components/prism-bash.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.21.0/plugins/line-highlight/prism-line-highlight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.21.0/plugins/toolbar/prism-toolbar.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.21.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
   </body>
 </html>

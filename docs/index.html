@@ -78,15 +78,7 @@
               let highlight = splited[1];
 
               cc.setAttribute('class', 'language-' + lang);
-              return (
-                '<pre data-lang="' +
-                lang +
-                '" data-line="' +
-                highlight +
-                '" class="line-numbers">' +
-                cc.outerHTML +
-                '</pre>'
-              );
+              return `<pre data-lang="${lang}" data-line="${highlight}" class="line-numbers">${cc.outerHTML}</pre>`;
             },
           },
         },

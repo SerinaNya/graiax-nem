@@ -1,4 +1,3 @@
-from _typeshed import StrPath
 from typing import List, Optional, Union
 
 from graia.application.message.elements.internal import At, Image
@@ -89,7 +88,7 @@ class AtList(List[At]):
 
 
 class ImagePro(Image):
-    async def save2file(self, filepath: StrPath) -> None:
+    async def save2file(self, filepath: str) -> None:
         '''
         将图片保存至文件
 

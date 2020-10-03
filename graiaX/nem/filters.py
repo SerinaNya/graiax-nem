@@ -31,7 +31,9 @@ class FrontFilters(object):
 
     @staticmethod
     def depend(func: Callable) -> Depend:
-        return Depend(func())
+        def wrapper(*args, **kwargs):
+            return Depend(func(*args, **kwargs))
+        return wrapper
 
 
 class GroupFilters(object):

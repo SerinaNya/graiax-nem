@@ -34,7 +34,7 @@ class NEM(object):
     - `nem.plain_message` *为所有的 `Plain` 拼接而成的字符串
     - `nem.plain_message_source` *为被回复的消息中所有的 `Plain` 拼接而成的字符串
     '''
-    _commandSymbol: str
+    _commandSymbol: str = '&'
     chain: MessageChain
     sender: Union[Member, Friend]
     sender_id: int
@@ -56,7 +56,7 @@ class NEM(object):
         args: Optional[str]
         argsList: Optional[List[str]]
 
-    def __init__(self, _message: Union[GroupMessage, FriendMessage], _command_symbol: str = '&') -> None:
+    def __init__(self, _message: Union[GroupMessage, FriendMessage], _command_symbol: str = None) -> None:
         '''
         初始化 NEM 解析器
 

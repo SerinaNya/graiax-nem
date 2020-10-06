@@ -21,7 +21,7 @@ class FrontFilters(object):
         return wrapper
 
     @staticmethod
-    def requireNotBanded(func: Callable[[GroupMessage], Callable]):
+    def requireNotBanned(func: Callable[[GroupMessage], Callable]):
         def wrapper(gm: GroupMessage):
             nem = NEM(gm)
             if nem.permission.isBlocked():
@@ -80,7 +80,7 @@ class GroupFilters(object):
         Args:
             command_name: 指令名称（不带标识符）'''
         @FrontFilters.requirePlain
-        @FrontFilters.requireNotBanded
+        @FrontFilters.requireNotBanned
         def wrapper(gm: GroupMessage):
             nem = NEM(gm)
             if nem.Command.cmd != command_name:
@@ -94,7 +94,7 @@ class GroupFilters(object):
 
         Args:
             qq: QQ 号'''
-        @FrontFilters.requireNotBanded
+        @FrontFilters.requireNotBanned
         def wrapper(gm: GroupMessage):
             nem = NEM(gm)
             if not qq in nem.at:
@@ -109,7 +109,7 @@ class GroupFilters(object):
         Args:
             word: 文字'''
         @FrontFilters.requirePlain
-        @FrontFilters.requireNotBanded
+        @FrontFilters.requireNotBanned
         def wrapper(gm: GroupMessage):
             nem = NEM(gm)
             if not word in nem.plain_message:
@@ -124,7 +124,7 @@ class GroupFilters(object):
         Args:
             words_list: 关键字列表'''
         @FrontFilters.requirePlain
-        @FrontFilters.requireNotBanded
+        @FrontFilters.requireNotBanned
         def wrapper(gm: GroupMessage):
             nem = NEM(gm)
             inList = False
@@ -144,7 +144,7 @@ class GroupFilters(object):
         Args:
             pattern: 正则表达式（必须为 str）'''
         @FrontFilters.requirePlain
-        @FrontFilters.requireNotBanded
+        @FrontFilters.requireNotBanned
         def wrapper(gm: GroupMessage):
             nem = NEM(gm)
             if not re.match(pattern, nem.plain_message):
@@ -159,7 +159,7 @@ class GroupFilters(object):
         Args:
             pattern_list: 正则表达式列表'''
         @FrontFilters.requirePlain
-        @FrontFilters.requireNotBanded
+        @FrontFilters.requireNotBanned
         def wrapper(gm: GroupMessage):
             nem = NEM(gm)
             matched: bool = False
